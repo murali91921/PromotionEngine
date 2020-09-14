@@ -6,8 +6,11 @@ namespace PromotionEngine.Tests
     public class PromotionTest
     {
         [TestMethod]
-        public void TestOrder_1()
+        public void TestPromotionStore()
         {
+            PromotionStore promotionStore = PromotionStore.GetStore();
+            PromotionStore promotionStore2 = PromotionStore.GetStore();
+            Assert.AreSame(promotionStore, promotionStore2);
         }
     }
 }

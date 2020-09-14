@@ -3,3 +3,7 @@
 ################################################################################
 
 /.vs/PromotionEngine/v16
+/PromotionEngine/obj
+/PromotionEngine.Tests/obj
+/PromotionEngine/bin/Debug/netcoreapp3.1
+/PromotionEngine.Tests/bin/Debug/netcoreapp3.1
