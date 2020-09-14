@@ -50,10 +50,28 @@ namespace PromotionEngine
                     }
                     //Adding applied Promotion Values to Cart Value.
                     TotalValue += item.PromoValue * min;
+                    //applying the unit Price of remained Quantity after Promotion is applied, set the PromoApplied flag to not to process same SKU, and also Quantity set to 0.
+                    tempOrderSKUs.ForEach(orderSku =>
+                    {
+                        item.promotionSKUs.ForEach(promoSku =>
+                        {
+                            if (orderSku.SKUId.ToLower() == promoSku.SKUId.ToLower() && !orderSku.PromoApplied)
+                            {
+                                TotalValue += promotionStore.GetSKUItem(orderSku.SKUId).UnitPrice * (orderSku.Quantity % (promoSku.Quantity * min));
+                                //orderSku.Quantity -= promoSku.Quantity * min;
+                                orderSku.PromoApplied = true;
+                            }
+                        });
+                    });
                     AppliedPromotions.Add(item);
                 }
             }
-            Console.WriteLine("Order processed successfully. Cart value :" + TotalValue);
+            //Applying the unit price of SKU's which are not having promotions, Quantity is not zero.
+            tempOrderSKUs.ForEach(obj =>
+            {
+                if (obj.Quantity != 0)
+                    TotalValue += promotionStore.GetSKUItem(obj.SKUId).UnitPrice * obj.Quantity;
+            });
         }
     }
 }
