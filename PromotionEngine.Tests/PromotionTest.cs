@@ -147,11 +147,11 @@ namespace PromotionEngine.Tests
                 }
             };
             order.Process();
-            //130+130+130+50
-            //45+45+30
-            //30+ 20*20
-            //--
-            Assert.AreEqual(order.TotalValue, 590);
+            //130+130+130+50= 440
+            //45+45+30      = 120
+            //30+ 20*20     =  70
+            //--            = 630
+            Assert.AreEqual(order.TotalValue, 630);
         }
     }
 }

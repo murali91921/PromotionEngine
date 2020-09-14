@@ -57,8 +57,8 @@ namespace PromotionEngine
                         {
                             if (orderSku.SKUId.ToLower() == promoSku.SKUId.ToLower() && !orderSku.PromoApplied)
                             {
-                                TotalValue += promotionStore.GetSKUItem(orderSku.SKUId).UnitPrice * (orderSku.Quantity % (promoSku.Quantity * min));
-                                //orderSku.Quantity -= promoSku.Quantity * min;
+                                //TotalValue += promotionStore.GetSKUItem(orderSku.SKUId).UnitPrice * (orderSku.Quantity % (promoSku.Quantity * min));
+                                orderSku.Quantity -= promoSku.Quantity * min;
                                 orderSku.PromoApplied = true;
                             }
                         });
@@ -66,7 +66,7 @@ namespace PromotionEngine
                     AppliedPromotions.Add(item);
                 }
             }
-            //Applying the unit price of SKU's which are not having promotions, Quantity is not zero.
+            //Applying the unit price of SKU's which have Quantity.
             tempOrderSKUs.ForEach(obj =>
             {
                 if (obj.Quantity != 0)
