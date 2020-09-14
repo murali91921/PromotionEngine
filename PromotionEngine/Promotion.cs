@@ -15,15 +15,17 @@ namespace PromotionEngine
         //Promotional Value
         public decimal PromoValue { get; set; }
     }
-    
+
     public partial class PromotionSKU : SKUQuantity
     {
         //Additional Properties
     }
+
     public class SKUQuantity
     {
         public string SKUId { get; set; }
-        public decimal Quantity { get; set; }
+
+        public virtual decimal Quantity { get; set; }
     }
 
 }

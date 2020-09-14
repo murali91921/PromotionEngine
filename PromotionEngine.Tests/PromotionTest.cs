@@ -70,7 +70,6 @@ namespace PromotionEngine.Tests
             });
         }
 
-
         [ClassInitialize]
         public static void Initialize(TestContext testContext)
         {
@@ -152,6 +151,40 @@ namespace PromotionEngine.Tests
             //30+ 20*20     =  70
             //--            = 630
             Assert.AreEqual(order.TotalValue, 630);
+        }
+
+        [TestMethod]
+        public void TestOrder5()
+        {
+            PromotionStore promotionStore = PromotionStore.GetStore();
+            promotionStore.AddOrUpdatePromotion(new Promotion
+            {
+                Name = "0 X A = 0",
+                PromotionId = Guid.NewGuid()
+                ,
+                promotionSKUs = new List<PromotionSKU>()
+                {
+                    new PromotionSKU{ SKUId="A",Quantity=0},
+                },
+                PromoValue = 0
+            });
+            Order order = new Order()
+            {
+                OrderId = Guid.NewGuid(),
+                SKUs = new List<OrderSKUQuantity>
+                {
+                    new OrderSKUQuantity{SKUId="A",Quantity=0 },
+                    new OrderSKUQuantity{SKUId="B",Quantity=5 },
+                    new OrderSKUQuantity{SKUId="C",Quantity=3 },
+                    new OrderSKUQuantity{SKUId="D",Quantity=1 },
+                }
+            };
+            order.Process();
+            //--        = 0
+            //45+45+30  = 120
+            //30+ 20*20 =  70
+            //--        = 630
+            Assert.AreEqual(order.TotalValue, 190);
         }
     }
 }

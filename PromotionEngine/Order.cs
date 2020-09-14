@@ -18,7 +18,7 @@ namespace PromotionEngine
         //List of SKus with Quantity in the cart
         public List<OrderSKUQuantity> SKUs { set; get; }
 
-        //Total Value of cart, it will be zero before process, afetr process method call, It will be set to calculated value.
+        //Total Value of cart, it will be zero before process, after process method call, It will be set to calculated value.
         public decimal TotalValue { private set; get; }
 
         //List of Promotions applied on Items in cart. This was to future purpose.
@@ -39,8 +39,8 @@ namespace PromotionEngine
             {
                 decimal min = decimal.MaxValue;
                 // Checking all Promotion SKUs are available for calculation or not by campring Qunatities of Order & Promotion, Status of OrderSKU(Promo Applied, Not applied)
-                if (item.promotionSKUs.All(promoSKU => tempOrderSKUs.Exists(orderSku => orderSku.SKUId.ToLower() == promoSKU.SKUId.ToLower() &&
-                    orderSku.Quantity >= promoSKU.Quantity && !orderSku.PromoApplied)))
+                if (item.promotionSKUs.All(promoSKU => tempOrderSKUs.Exists(orderSku => !orderSku.PromoApplied && orderSku.Quantity > 0
+                    && orderSku.SKUId.ToLower() == promoSKU.SKUId.ToLower() && orderSku.Quantity >= promoSKU.Quantity)))
                 {
                     // Counting the combinations of Promo SKU's in Order SKU's
                     foreach (var promoSKU in item.promotionSKUs)
