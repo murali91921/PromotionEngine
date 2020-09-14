@@ -6,6 +6,7 @@ namespace PromotionEngine.Tests
     public class PromotionTest
     {
         [TestMethod]
+        [Priority(0)]
         public void TestPromotionStore()
         {
             PromotionStore promotionStore = PromotionStore.GetStore();
